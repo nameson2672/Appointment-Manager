@@ -16,10 +16,17 @@ function InitializeCalendar() {
             },
             selectable: true,
             editable: false,
+            select: function (event) {
+                onShowModal(event, null);
+            }
         });
         calendar.render();
     }
     catch (e) {
         alert(e);
     }
+}
+
+function onShowModel(obj, isEventDetails) {
+    $("appointmentInput").modal("show");
 }
