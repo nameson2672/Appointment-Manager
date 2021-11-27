@@ -3,6 +3,7 @@ using AppoinmentScudeler.Models.ViewModels;
 using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
+using AppoinmentScudeler.Utility;
 
 namespace AppoinmentScudeler.Services
 {
@@ -17,6 +18,8 @@ namespace AppoinmentScudeler.Services
         public List<DocterVM> GetDocterList()
         {
             var doctors = (from user in _db.Users
+                           join userRoles in _db.UserRoles on user.Id equals userRoles.UserId
+                           join roles in _db.Roles.Where(x => x.Name == Helper.Doctor) on userRoles.RoleId equals roles.Id
                            select new DocterVM
                            {
                                Id = user.Id,
@@ -28,7 +31,16 @@ namespace AppoinmentScudeler.Services
 
         public List<PataintVM> GetPataintList()
         {
-            throw new System.NotImplementedException();
+            var patints = (from user in _db.Users
+                           join userRoles in _db.UserRoles on user.Id equals userRoles.UserId
+                            join roles in _db.Roles.Where(x => x.Name == Helper.Patient) on userRoles.RoleId equals roles.Id
+                           select new PataintVM
+                           {
+                               Id = user.Id,
+                               Name = user.Name
+                           }
+                           ).ToList();
+            return patints;
         }
     }
 }
