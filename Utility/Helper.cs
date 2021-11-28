@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace AppoinmentScudeler.Utility
 {
@@ -19,4 +22,33 @@ namespace AppoinmentScudeler.Utility
             };
         }
     }
+
+    public static List<SelectListItem> GetTimeDropDown()
+    {
+        int minute = 60;
+        List<SelectListItem> duration = new List<SelectListItem>();
+        for(int i=1; i<=12; i++)
+        {
+            duration.Add(new SelectListItem { Value = minute.ToString(), Text=i + " Hr" });
+            minute = minute+30;
+            duration.Add(new SelectListItem { Value = minute.ToString(), Text = i + " Hr 30min" });
+            minute = minute + 30;
+        }
+        return duration;
+    }
+
+    public static List<SelectListItem> GetTimeDropDowns()
+    {
+        int minute = 60;
+        List<SelectListItem> duration = new List<SelectListItem>();
+        for (int i = 1; i <= 12; i++)
+        {
+            duration.Add(new SelectListItem { Value = minute.ToString(), Text = i + " Hr" });
+            minute = minute + 30;
+            duration.Add(new SelectListItem { Value = minute.ToString(), Text = i + " Hr 30 min" });
+            minute = minute + 30;
+        }
+        return duration;
+    }
+
 }

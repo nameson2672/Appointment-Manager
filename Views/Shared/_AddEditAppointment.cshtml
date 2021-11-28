@@ -1,7 +1,25 @@
 ﻿<div class="modal fade" role="dialog" id="appointmentInput" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog">
         <div class="modal-content">
-            <h3>Hello!</h3>
+            <form id="appoinmentForm" autocomplete="off" novalidate="novalidate">
+                <div class="modal-header">
+                    <h4 class="modal-title">Add/Edit Appoinment</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="title">Title</label>
+                        <input type="text" maxlength="100" id="title" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <input type="text" maxlength="100" id="title" class="form-control">
+                    </div>
+                      <div class="form-group">
+                        <label for="title">Select Pataient</label>
+                        <select id="pataintId" class="form-control" asp-items="@(new SelectList(ViewBag.PataintList, "Id","Name"))"></select>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>

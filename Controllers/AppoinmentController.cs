@@ -13,7 +13,8 @@ namespace AppoinmentScudeler.Controllers
         }
         public IActionResult Index()
         {
-            ViewBag.DocterList =  _appionmentServices.GetDocterList();
+            ViewBag.DocterList = _appionmentServices.GetDocterList();
+            ViewBag.PataintList = _appionmentServices.GetPataintList();
             return View();
         }
     }
