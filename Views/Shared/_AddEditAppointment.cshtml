@@ -18,6 +18,15 @@
                         <label for="title">Select Pataient</label>
                         <select id="pataintId" class="form-control" asp-items="@(new SelectList(ViewBag.PataintList, "Id","Name"))"></select>
                     </div>
+                    <div class="form-group">
+                        <label for="title">Duration</label>
+                        <select id="duration" class="form-control" asp-items="ViewBag.Duration"></select>
+                    </div>
+                    <input type="hidden" id="id" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="onCloseModal();">Close</button>
+                    <button type="button" class="btn btn-sucess" onclick="onSubmitModal();" id="btnSubmit">Submit</button>
                 </div>
             </form>
         </div>

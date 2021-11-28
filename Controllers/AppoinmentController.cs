@@ -1,4 +1,5 @@
 ﻿using AppoinmentScudeler.Services;
+using AppoinmentScudeler.Utility;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AppoinmentScudeler.Controllers
@@ -13,6 +14,7 @@ namespace AppoinmentScudeler.Controllers
         }
         public IActionResult Index()
         {
+            ViewBag.Duration = Helper.GetTimeDropDown();
             ViewBag.DocterList = _appionmentServices.GetDocterList();
             ViewBag.PataintList = _appionmentServices.GetPataintList();
             return View();
