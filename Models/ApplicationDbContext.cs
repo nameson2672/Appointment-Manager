@@ -9,5 +9,6 @@ namespace AppoinmentScudeler.Models
         {
 
         }
+        public DbSet<Appointment> Appointments { get; set; }
     }
 }
