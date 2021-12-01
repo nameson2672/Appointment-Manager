@@ -1,9 +1,10 @@
 ﻿using AppoinmentScudeler.Models;
 using AppoinmentScudeler.Models.ViewModels;
-using System.Collections.Generic;
-using System.Collections;
-using System.Linq;
 using AppoinmentScudeler.Utility;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace AppoinmentScudeler.Services
 {
@@ -15,6 +16,39 @@ namespace AppoinmentScudeler.Services
         {
             _db = db;
         }
+
+        public async Task<int> AddUpdate(AppointmentVM model)
+        {
+            var startDate = DateTime.Parse(model.StartDate);
+            var endDate = DateTime.Parse(model.StartDate).AddMinutes(Convert.ToDouble(model.Duration));
+
+            if (model != null && model.Id > 0)
+            {
+                // Update
+                return 2;
+            }
+            else
+            {
+                // Create
+                Appointment appointment = new Appointment()
+                {
+                    Title = model.Title,
+                    Description = model.Description,
+                    StartDate = startDate,
+                    EndDate = endDate,
+                    Duration = model.Duration,
+                    DoctorId = model.DoctorId,
+                    PatientId = model.PatientId,
+                    IsDoctorApproved = false,
+                    AdminId = model.AdminId
+                };
+
+                _db.Appointments.Add(appointment);
+                await _db.SaveChangesAsync();
+                return 2;
+            }
+        }
+
         public List<DocterVM> GetDocterList()
         {
             var doctors = (from user in _db.Users
@@ -33,7 +67,7 @@ namespace AppoinmentScudeler.Services
         {
             var patints = (from user in _db.Users
                            join userRoles in _db.UserRoles on user.Id equals userRoles.UserId
-                            join roles in _db.Roles.Where(x => x.Name == Helper.Patient) on userRoles.RoleId equals roles.Id
+                           join roles in _db.Roles.Where(x => x.Name == Helper.Patient) on userRoles.RoleId equals roles.Id
                            select new PataintVM
                            {
                                Id = user.Id,

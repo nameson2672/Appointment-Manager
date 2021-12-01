@@ -10,8 +10,8 @@ namespace AppoinmentScudeler.Models
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public int Duration { get; set; }
-        public string DoctorId  { get; set; }
-        public string PataintId { get; set; }
+        public string DoctorId { get; set; }
+        public string PatientId { get; set; }
         public bool IsDoctorApproved { get; set; }
         public string AdminId { get; set; }
 

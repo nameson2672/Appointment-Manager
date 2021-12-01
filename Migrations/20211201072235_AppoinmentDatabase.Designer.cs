@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AppoinmentScudeler.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211130090606_AddAppointmentToDb")]
-    partial class AddAppointmentToDb
+    [Migration("20211201072235_AppoinmentDatabase")]
+    partial class AppoinmentDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -91,7 +91,7 @@ namespace AppoinmentScudeler.Migrations
 
             modelBuilder.Entity("AppoinmentScudeler.Models.Appointment", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -114,7 +114,7 @@ namespace AppoinmentScudeler.Migrations
                     b.Property<bool>("IsDoctorApproved")
                         .HasColumnType("bit");
 
-                    b.Property<string>("PataintId")
+                    b.Property<string>("PatientId")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("StartDate")

@@ -1,11 +1,14 @@
-﻿using AppoinmentScudeler.Services;
+﻿using AppoinmentScudeler.Models.ViewModels;
+using AppoinmentScudeler.Services;
+using AppoinmentScudeler.Utility;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Security.Claims;
 
 namespace AppoinmentScudeler.Controllers.Api
 {
-    [Route("api/AddAppoinment")]
+    [Route("api/Appointment")]
     [ApiController]
     public class AppointmentApiController : Controller
     {
@@ -21,9 +24,32 @@ namespace AppoinmentScudeler.Controllers.Api
             loginUserId = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
             role = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Role);
         }
-        public IActionResult Index()
+        [HttpPost]
+        [Route("SaveCalendarData")]
+        public IActionResult SaveCalenderData(AppointmentVM data)
         {
-            return View();
+            CommonResponse<int> commonResponse = new CommonResponse<int>();
+            try
+            {
+                int Code = _appointmentServices.AddUpdate(data).Result;
+                Console.WriteLine(Code);
+                commonResponse.Status = Code;
+                if (commonResponse.Status == 1)
+                {
+                    commonResponse.Message = Helper.appointmentUpdated;
+                }
+                if (commonResponse.Status == 2)
+                {
+                    commonResponse.Message = Helper.appointmentAdded;
+                }
+            }
+            catch (Exception e)
+            {
+                commonResponse.Message = e.Message;
+                commonResponse.Status = Helper.failure_code;
+            }
+            return Ok(commonResponse);
         }
+
     }
 }

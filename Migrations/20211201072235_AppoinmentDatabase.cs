@@ -1,9 +1,9 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+using System;
 
 namespace AppoinmentScudeler.Migrations
 {
-    public partial class AddAppointmentToDb : Migration
+    public partial class AppoinmentDatabase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -19,7 +19,7 @@ namespace AppoinmentScudeler.Migrations
                     EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Duration = table.Column<int>(type: "int", nullable: false),
                     DoctorId = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PataintId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PatientId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsDoctorApproved = table.Column<bool>(type: "bit", nullable: false),
                     AdminId = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -27,12 +27,6 @@ namespace AppoinmentScudeler.Migrations
                 {
                     table.PrimaryKey("PK_Appointments", x => x.Id);
                 });
-        }
-
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropTable(
-                name: "Appointments");
         }
     }
 }
