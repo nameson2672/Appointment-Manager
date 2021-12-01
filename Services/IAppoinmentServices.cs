@@ -1,5 +1,6 @@
 ﻿using AppoinmentScudeler.Models.ViewModels;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace AppoinmentScudeler.Services
 {
@@ -7,5 +8,6 @@ namespace AppoinmentScudeler.Services
     {
         public List<DocterVM> GetDocterList();
         public List<PataintVM> GetPataintList();
+        public Task<int> AddUpdate(AppointmentVM model);
     }
 }
