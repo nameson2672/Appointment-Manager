@@ -4,6 +4,7 @@ using AppoinmentScudeler.Utility;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Security.Claims;
 
 namespace AppoinmentScudeler.Controllers.Api
@@ -41,6 +42,37 @@ namespace AppoinmentScudeler.Controllers.Api
                 if (commonResponse.Status == 2)
                 {
                     commonResponse.Message = Helper.appointmentAdded;
+                }
+            }
+            catch (Exception e)
+            {
+                commonResponse.Message = e.Message;
+                commonResponse.Status = Helper.failure_code;
+            }
+            return Ok(commonResponse);
+        }
+
+        [HttpGet]
+        [Route("GetCalendarData")]
+        public IActionResult GetCalendarData(string doctorId)
+        {
+            CommonResponse<List<AppointmentVM>> commonResponse = new CommonResponse<List<AppointmentVM>>();
+            try
+            {
+                if (role == Helper.Patient)
+                {
+                    commonResponse.Dataenum = _appointmentServices.PatientsEventsById(loginUserId);
+                    commonResponse.Status = Helper.success_code;
+                }
+                else if (role == Helper.Doctor)
+                {
+                    commonResponse.Dataenum = _appointmentServices.DoctorsEventsById(loginUserId);
+                    commonResponse.Status = Helper.success_code;
+                }
+                else
+                {
+                    commonResponse.Dataenum = _appointmentServices.DoctorsEventsById(doctorId);
+                    commonResponse.Status = Helper.success_code;
                 }
             }
             catch (Exception e)
