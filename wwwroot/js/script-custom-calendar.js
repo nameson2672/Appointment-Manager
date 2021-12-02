@@ -8,11 +8,13 @@ $(document).ready(function () {
   InitializeCalendar();
 });
 
+let calendar;
+
 function InitializeCalendar() {
   try {
     const calenderE1 = document.getElementById("calendar");
     if (calenderE1 != null) {
-      let calendar = new FullCalendar.Calendar(calenderE1, {
+      calendar = new FullCalendar.Calendar(calenderE1, {
         initialView: "dayGridMonth",
         headerToolbar: {
           left: "prev,next,today",
@@ -81,12 +83,37 @@ function onShowModal(obj, isEventDetail) {
     $("#id").val(obj.id);
     $("#lblPatientName").html(obj.patientName);
     $("#lblDoctorName").html(obj.doctorName);
+
+    if (obj.isDoctorApproved) {
+      $("#lblStatus").html("Approved");
+      //$("#btnConfirm").addClass("d-none");
+      //$("#btnSubmit").addClass("d-none");
+    } else {
+      $("#lblStatus").html("Pending");
+      //$("#btnConfirm").removeClass("d-none");
+      //$("#btnSubmit").removeClass("d-none");
+    }
+  } else {
+    $("#appointmentDate").val(
+      obj.startStr + " " + new moment().format("hh:mm A")
+    );
+    $("#id").val(0);
   }
   $("#appointmentInput").modal("show");
 }
 
 function onCloseModal() {
+  // $("#appointmentForm")[0].reset();
+  $("#title").val("");
+  $("#description").val("");
+  $("#appointmentDate").val("");
+  $("#duration").val("");
+  $("#id").val(0);
+  $("#lblPatientName").html("");
+  $("#lblDoctorName").html("");
   $("#appointmentInput").modal("hide");
+  $("#lblPatientName").html(obj.patientName);
+  $("#lblDoctorName").html(obj.doctorName);
 }
 
 function onSubmitForm() {
@@ -110,7 +137,7 @@ function onSubmitForm() {
       contentType: "application/json",
       success: function (response) {
         if (response.status === 1 || response.status === 2) {
-          //   calendar.refetchEvents();
+          calendar.refetchEvents();
           $.notify(response.message, "success");
           onCloseModal();
         } else {
@@ -162,4 +189,9 @@ function getEventDetailsByEventId(info) {
       $.notify("Error", "error");
     },
   });
+}
+
+function onDoctorChange() {
+  calendar.refetchEvents();
+  console.log("running");
 }
