@@ -11,5 +11,6 @@ namespace AppoinmentScudeler.Services
         public Task<int> AddUpdate(AppointmentVM model);
         public List<AppointmentVM> PatientsEventsById(string patientId);
         public List<AppointmentVM> DoctorsEventsById(string doctorId);
+        public AppointmentVM GetById(int id);
     }
 }

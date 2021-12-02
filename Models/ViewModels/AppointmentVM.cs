@@ -14,7 +14,7 @@
         public string AdminId { get; set; }
 
         public string DoctorName { get; set; }
-        public string PatintName { get; set; }
+        public string PatientName { get; set; }
         public string AdminName { get; set; }
     }
 }
