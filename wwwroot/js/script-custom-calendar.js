@@ -86,12 +86,12 @@ function onShowModal(obj, isEventDetail) {
 
     if (obj.isDoctorApproved) {
       $("#lblStatus").html("Approved");
-      //$("#btnConfirm").addClass("d-none");
-      //$("#btnSubmit").addClass("d-none");
+      $("#btnConfirm").addClass("d-none");
+      $("#btnSubmit").addClass("d-none");
     } else {
       $("#lblStatus").html("Pending");
-      //$("#btnConfirm").removeClass("d-none");
-      //$("#btnSubmit").removeClass("d-none");
+      $("#btnConfirm").removeClass("d-none");
+      $("#btnSubmit").removeClass("d-none");
     }
   } else {
     $("#appointmentDate").val(
@@ -103,7 +103,7 @@ function onShowModal(obj, isEventDetail) {
 }
 
 function onCloseModal() {
-  // $("#appointmentForm")[0].reset();
+  $("#appointmentForm")[0].reset();
   $("#title").val("");
   $("#description").val("");
   $("#appointmentDate").val("");
@@ -183,7 +183,7 @@ function getEventDetailsByEventId(info) {
       if (response.status === 1 && response.dataenum !== undefined) {
         onShowModal(response.dataenum, true);
       }
-      //successCallback(events);
+      successCallback(events);
     },
     error: function (xhr) {
       $.notify("Error", "error");

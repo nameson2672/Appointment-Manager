@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "d:\\Dotnet Shit\\AppoinmentScudeler\\AppoinmentScudeler.csproj": {}
+    "D:\\Dotnet Shit\\AppoinmentScudeler\\AppoinmentScudeler.csproj": {}
   },
   "projects": {
-    "d:\\Dotnet Shit\\AppoinmentScudeler\\AppoinmentScudeler.csproj": {
+    "D:\\Dotnet Shit\\AppoinmentScudeler\\AppoinmentScudeler.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "d:\\Dotnet Shit\\AppoinmentScudeler\\AppoinmentScudeler.csproj",
+        "projectUniqueName": "D:\\Dotnet Shit\\AppoinmentScudeler\\AppoinmentScudeler.csproj",
         "projectName": "AppoinmentScudeler",
-        "projectPath": "d:\\Dotnet Shit\\AppoinmentScudeler\\AppoinmentScudeler.csproj",
+        "projectPath": "D:\\Dotnet Shit\\AppoinmentScudeler\\AppoinmentScudeler.csproj",
         "packagesPath": "C:\\Users\\Legion\\.nuget\\packages\\",
-        "outputPath": "d:\\Dotnet Shit\\AppoinmentScudeler\\obj\\",
+        "outputPath": "D:\\Dotnet Shit\\AppoinmentScudeler\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Legion\\AppData\\Roaming\\NuGet\\NuGet.Config",
