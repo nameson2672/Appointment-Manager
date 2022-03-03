@@ -1,17 +1,14 @@
 using AppoinmentScudeler.Models;
 using AppoinmentScudeler.Services;
+using AppointmentScheduling.DbInitializer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace AppoinmentScudeler
 {
@@ -28,8 +25,44 @@ namespace AppoinmentScudeler
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>
-                (options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                (x =>
+                {
+
+                    var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+                    string connStr;
+
+                    if (env == "Development")
+                    {
+                        connStr = Configuration.GetConnectionString("DefaultConnection");
+
+
+                    }
+                    else
+                    {
+                        // Use connection string provided at runtime by Heroku.
+                        var connUrl = Environment.GetEnvironmentVariable("CLEARDB_DATABASE_URL");
+
+                        connUrl = connUrl.Replace("mysql://", string.Empty);
+                        var userPassSide = connUrl.Split("@")[0];
+                        var hostSide = connUrl.Split("@")[1];
+
+                        var connUser = userPassSide.Split(":")[0];
+                        var connPass = userPassSide.Split(":")[1];
+                        var connHost = hostSide.Split("/")[0];
+                        var connDb = hostSide.Split("/")[1].Split("?")[0];
+
+
+                        connStr = $"server={connHost};Uid={connUser};Pwd={connPass};Database={connDb}";
+
+
+
+                    }
+
+                    x.UseSqlServer(connStr);
+
+                });
             services.AddControllersWithViews();
+            services.AddScoped<IDbInitializer, DbInitializer>();
 
             services.AddTransient<IAppoinmentServices, AppoinmentServices>();
 
@@ -39,7 +72,7 @@ namespace AppoinmentScudeler
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IDbInitializer dbInitializer)
         {
             if (env.IsDevelopment())
             {
@@ -57,6 +90,8 @@ namespace AppoinmentScudeler
             app.UseRouting();
 
             app.UseAuthentication();
+
+            dbInitializer.Initalize();
 
             app.UseAuthorization();
 
