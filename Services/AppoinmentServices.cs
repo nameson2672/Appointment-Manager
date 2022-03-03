@@ -129,5 +129,15 @@ namespace AppoinmentScudeler.Services
             }
             return 0;
         }
+        public async Task<int> ConfirmEvent(int id)
+        {
+            var appointment = _db.Appointments.FirstOrDefault(x => x.Id == id);
+            if (appointment != null)
+            {
+                appointment.IsDoctorApproved = true;
+                return await _db.SaveChangesAsync();
+            }
+            return 0;
+        }
     }
 }

@@ -122,6 +122,36 @@ namespace AppoinmentScudeler.Controllers.Api
             }
             return Ok(commonResponse);
         }
+
+        [HttpGet]
+        [Route("ConfirmEvent/{id}")]
+        public IActionResult ConfirmEvent(int id)
+        {
+            CommonResponse<int> commonResponse = new CommonResponse<int>();
+            try
+            {
+                var result = _appointmentServices.ConfirmEvent(id).Result;
+                if (result > 0)
+                {
+                    commonResponse.Status = Helper.success_code;
+                    commonResponse.Message = Helper.meetingConfirm;
+                }
+                else
+                {
+
+                    commonResponse.Status = Helper.failure_code;
+                    commonResponse.Message = Helper.meetingConfirmError;
+                }
+
+            }
+            catch (Exception e)
+            {
+                commonResponse.Message = e.Message;
+                commonResponse.Status = Helper.failure_code;
+            }
+            return Ok(commonResponse);
+        }
+
     }
 
 }

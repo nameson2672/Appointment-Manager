@@ -13,5 +13,6 @@ namespace AppoinmentScudeler.Services
         public List<AppointmentVM> DoctorsEventsById(string doctorId);
         public AppointmentVM GetById(int id);
         public Task<int> Delete(int id);
+        public Task<int> ConfirmEvent(int id);
     }
 }
