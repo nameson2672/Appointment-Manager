@@ -1,6 +1,7 @@
-﻿namespace AppoinmentScudeler.DbInitializer
+﻿namespace AppointmentScheduling.DbInitializer
 {
-    public class IDbInitializer
+    public interface IDbInitializer
     {
+        void Initalize();
     }
 }

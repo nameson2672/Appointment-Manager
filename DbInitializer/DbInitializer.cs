@@ -2,7 +2,6 @@
 using AppoinmentScudeler.Utility;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Linq;
 
@@ -37,7 +36,7 @@ namespace AppointmentScheduling.DbInitializer
 
             }
 
-            if (_db.Roles.Any(x => x.Name == Utility.Helper.Admin)) return;
+            if (_db.Roles.Any(x => x.Name == Helper.Admin)) return;
 
 
             _roleManager.CreateAsync(new IdentityRole(Helper.Admin)).GetAwaiter().GetResult();
