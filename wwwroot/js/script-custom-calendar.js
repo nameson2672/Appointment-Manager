@@ -1,20 +1,18 @@
-﻿var routeURL = location.protocol + "//" + location.host;
-console.log(routeURL);
+﻿﻿var routeURL = location.protocol + "//" + location.host;
 $(document).ready(function () {
   $("#appointmentDate").kendoDateTimePicker({
     value: new Date(),
     dateInput: false,
   });
+
   InitializeCalendar();
 });
-
-let calendar;
-
+var calendar;
 function InitializeCalendar() {
   try {
-    const calenderE1 = document.getElementById("calendar");
-    if (calenderE1 != null) {
-      calendar = new FullCalendar.Calendar(calenderE1, {
+    var calendarEl = document.getElementById("calendar");
+    if (calendarEl != null) {
+      calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: "dayGridMonth",
         headerToolbar: {
           left: "prev,next,today",
@@ -23,6 +21,9 @@ function InitializeCalendar() {
         },
         selectable: true,
         editable: false,
+        select: function (event) {
+          onShowModal(event, null);
+        },
         eventDisplay: "block",
         events: function (fetchInfo, successCallback, failureCallback) {
           $.ajax({
@@ -60,10 +61,6 @@ function InitializeCalendar() {
         eventClick: function (info) {
           getEventDetailsByEventId(info.event);
         },
-        select: function (event) {
-          console.log(event);
-          onShowModal(event, null);
-        },
       });
       calendar.render();
     }
@@ -83,7 +80,6 @@ function onShowModal(obj, isEventDetail) {
     $("#id").val(obj.id);
     $("#lblPatientName").html(obj.patientName);
     $("#lblDoctorName").html(obj.doctorName);
-
     if (obj.isDoctorApproved) {
       $("#lblStatus").html("Approved");
       $("#btnConfirm").addClass("d-none");
@@ -93,35 +89,32 @@ function onShowModal(obj, isEventDetail) {
       $("#btnConfirm").removeClass("d-none");
       $("#btnSubmit").removeClass("d-none");
     }
+    $("#btnDelete").removeClass("d-none");
   } else {
     $("#appointmentDate").val(
       obj.startStr + " " + new moment().format("hh:mm A")
     );
     $("#id").val(0);
+    $("#btnDelete").addClass("d-none");
+    $("#btnSubmit").removeClass("d-none");
   }
   $("#appointmentInput").modal("show");
 }
 
 function onCloseModal() {
-  $("#appointmentForm")[0].reset();
+  //   $("#apointmentForm")[0].reset();
+  $("#id").val(0);
   $("#title").val("");
   $("#description").val("");
   $("#appointmentDate").val("");
-  $("#duration").val("");
-  $("#id").val(0);
-  $("#lblPatientName").html("");
-  $("#lblDoctorName").html("");
+
   $("#appointmentInput").modal("hide");
-  $("#lblPatientName").html(obj.patientName);
-  $("#lblDoctorName").html(obj.doctorName);
 }
 
 function onSubmitForm() {
-  console.log($("#patientId").val());
-
   if (checkValidation()) {
     var requestData = {
-      Id: parseInt("asd"),
+      Id: parseInt($("#id").val()),
       Title: $("#title").val(),
       Description: $("#description").val(),
       StartDate: $("#appointmentDate").val(),
@@ -156,7 +149,6 @@ function checkValidation() {
   if ($("#title").val() === undefined || $("#title").val() === "") {
     isValid = false;
     $("#title").addClass("error");
-    console.log("me 2");
   } else {
     $("#title").removeClass("error");
   }
@@ -193,5 +185,46 @@ function getEventDetailsByEventId(info) {
 
 function onDoctorChange() {
   calendar.refetchEvents();
-  console.log("running");
+}
+
+function onDeleteAppointment() {
+  var id = parseInt($("#id").val());
+  $.ajax({
+    url: routeURL + "/api/Appointment/DeleteAppoinment/" + id,
+    type: "GET",
+    dataType: "JSON",
+    success: function (response) {
+      if (response.status === 1) {
+        $.notify(response.message, "success");
+        calendar.refetchEvents();
+        onCloseModal();
+      } else {
+        $.notify(response.message, "error");
+      }
+    },
+    error: function (xhr) {
+      $.notify("Error", "error");
+    },
+  });
+}
+
+function onConfirm() {
+  var id = parseInt($("#id").val());
+  $.ajax({
+    url: routeURL + "/api/Appointment/ConfirmEvent/" + id,
+    type: "GET",
+    dataType: "JSON",
+    success: function (response) {
+      if (response.status === 1) {
+        $.notify(response.message, "success");
+        calendar.refetchEvents();
+        onCloseModal();
+      } else {
+        $.notify(response.message, "error");
+      }
+    },
+    error: function (xhr) {
+      $.notify("Error", "error");
+    },
+  });
 }
