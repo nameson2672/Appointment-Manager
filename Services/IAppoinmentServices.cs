@@ -8,6 +8,7 @@ namespace AppoinmentScudeler.Services
     {
         public List<DocterVM> GetDocterList();
         public List<PataintVM> GetPataintList();
+        public PataintVM GetPataintByid(string id);
         public Task<int> AddUpdate(AppointmentVM model);
         public List<AppointmentVM> PatientsEventsById(string patientId);
         public List<AppointmentVM> DoctorsEventsById(string doctorId);

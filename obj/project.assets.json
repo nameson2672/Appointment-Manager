@@ -7755,19 +7755,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Legion\\.nuget\\packages\\": {}
+    "C:\\Users\\names\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Dotnet Shit\\AppoinmentScudeler\\AppoinmentScudeler.csproj",
+      "projectUniqueName": "C:\\Users\\names\\Desktop\\Project working on\\Appointment-Manager\\AppoinmentScudeler.csproj",
       "projectName": "AppoinmentScudeler",
-      "projectPath": "D:\\Dotnet Shit\\AppoinmentScudeler\\AppoinmentScudeler.csproj",
-      "packagesPath": "C:\\Users\\Legion\\.nuget\\packages\\",
-      "outputPath": "D:\\Dotnet Shit\\AppoinmentScudeler\\obj\\",
+      "projectPath": "C:\\Users\\names\\Desktop\\Project working on\\Appointment-Manager\\AppoinmentScudeler.csproj",
+      "packagesPath": "C:\\Users\\names\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\names\\Desktop\\Project working on\\Appointment-Manager\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Legion\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\names\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -7842,7 +7842,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100-rc.2.21505.57\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.203\\RuntimeIdentifierGraph.json"
       }
     }
   }

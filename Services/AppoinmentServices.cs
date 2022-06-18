@@ -139,5 +139,18 @@ namespace AppoinmentScudeler.Services
             }
             return 0;
         }
+
+        public PataintVM GetPataintByid(string id)
+        {
+             var patints = (from user in _db.Users
+                           where user.Id == id
+                           select new PataintVM
+                           {
+                               Id = user.Id,
+                               Name = user.Name
+                           }
+                           ).ToList();
+            return patints[0];
+        }
     }
 }

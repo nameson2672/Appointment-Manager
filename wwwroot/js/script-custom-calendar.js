@@ -70,6 +70,7 @@ function InitializeCalendar() {
 }
 
 function onShowModal(obj, isEventDetail) {
+  console.log(obj);
   if (isEventDetail != null) {
     $("#title").val(obj.title);
     $("#description").val(obj.description);
@@ -91,6 +92,10 @@ function onShowModal(obj, isEventDetail) {
     }
     $("#btnDelete").removeClass("d-none");
   } else {
+    $("#lblStatus").html("");
+    var selectedDoc = $('#doctorId').find(":selected").text();;
+    console.log(selectedDoc);
+    $("#lblDoctorName").html(selectedDoc);
     $("#appointmentDate").val(
       obj.startStr + " " + new moment().format("hh:mm A")
     );
@@ -102,12 +107,11 @@ function onShowModal(obj, isEventDetail) {
 }
 
 function onCloseModal() {
-  //   $("#apointmentForm")[0].reset();
   $("#id").val(0);
   $("#title").val("");
   $("#description").val("");
   $("#appointmentDate").val("");
-
+  $("#lblStatus").val("");
   $("#appointmentInput").modal("hide");
 }
 
@@ -122,7 +126,7 @@ function onSubmitForm() {
       DoctorId: $("#doctorId").val(),
       PatientId: $("#patientId").val(),
     };
-
+    console.log($("#patientId").val());
     $.ajax({
       url: routeURL + "/api/Appointment/SaveCalendarData",
       type: "POST",
